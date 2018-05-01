@@ -28,7 +28,6 @@ module Cardano.Wallet.Kernel.DB.HdWallet.Read (
   , readHdAddress
   ) where
 
-{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
 -- The hide is strictly not necessary, but good for human readers: it's not
 -- the same as the familiar Data.Foldable.toList
 import           Universum hiding (toList)
@@ -42,6 +41,8 @@ import           Cardano.Wallet.Kernel.DB.HdWallet
 import           Cardano.Wallet.Kernel.DB.Spec
 import           Cardano.Wallet.Kernel.DB.Util.IxSet (IxSet)
 import qualified Cardano.Wallet.Kernel.DB.Util.IxSet as IxSet
+
+{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
 
 {-------------------------------------------------------------------------------
   Infrastructure

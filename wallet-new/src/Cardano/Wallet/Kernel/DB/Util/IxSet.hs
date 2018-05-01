@@ -23,7 +23,6 @@ module Cardano.Wallet.Kernel.DB.Util.IxSet (
   , otraverse
   ) where
 
-{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
 -- The hide is strictly not necessary, but good for human readers: it's not
 -- the same as the familiar Data.Foldable.toList
 import           Universum hiding (toList)
@@ -35,6 +34,8 @@ import qualified Data.IxSet.Typed as IxSet
 import           Data.SafeCopy (SafeCopy (..))
 import qualified Data.Set as Set
 import qualified Data.Traversable
+
+{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
 
 {-------------------------------------------------------------------------------
   Primary keys
