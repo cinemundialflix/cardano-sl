@@ -23,7 +23,10 @@ module Cardano.Wallet.Kernel.DB.Util.IxSet (
   , otraverse
   ) where
 
-import           Universum
+{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
+-- The hide is strictly not necessary, but good for human readers: it's not
+-- the same as the familiar Data.Foldable.toList
+import           Universum hiding (toList)
 
 import qualified Control.Lens as Lens
 import           Data.Coerce (coerce)
@@ -131,14 +134,8 @@ instance (HasPrimKey a, Indexable a) => Lens.At (IxSet a) where
   Standard and @universum@ type class instances
 -------------------------------------------------------------------------------}
 
-type instance Element (IxSet a) = a
-
-instance ToList (IxSet a) where
-    toList = coerce . IxSet.toList . unwrapIxSet
-    null   = IxSet.null . unwrapIxSet
-
 instance Foldable IxSet where
-    foldr f e = foldr f e . toList
+    foldr f e = Data.Foldable.foldr f e . Data.Foldable.toList
 
 {-------------------------------------------------------------------------------
   Queries
@@ -178,4 +175,4 @@ omap f =
 -- NOTE: This rebuilds the entire 'IxSet'. Potentially expensive.
 otraverse :: (Applicative f, Indexable a)
           => (a -> f a) -> IxSet a -> f (IxSet a)
-otraverse f = fmap fromList . Data.Traversable.traverse f . toList
+otraverse f = fmap fromList . Data.Traversable.traverse f . Data.Foldable.toList

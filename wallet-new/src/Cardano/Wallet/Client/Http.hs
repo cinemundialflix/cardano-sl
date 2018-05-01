@@ -78,7 +78,7 @@ mkHttpClient baseUrl manager = WalletClient
 
     -- Must give the type. GHC will not infer it to be polymorphic in 'a'.
     run :: forall a . ClientM a -> IO (Either ClientError a)
-    run = fmap (over _Left ClientHttpError) . (`runClientM` clientEnv)
+    run = fmap (over _Left parseJsendError) . (`runClientM` clientEnv)
 
     unNoContent = map void
     cookieJar = Nothing
@@ -90,7 +90,6 @@ mkHttpClient baseUrl manager = WalletClient
                     Just err -> ClientWalletError err
                     Nothing  -> ClientHttpError servantErr
             _ -> ClientHttpError servantErr
-    run       = fmap (over _Left parseJsendError) . (`runClientM` clientEnv)
     getAddressIndexR
         :<|> postAddressR
         :<|> getAddressR

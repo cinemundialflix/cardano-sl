@@ -28,9 +28,13 @@ module Cardano.Wallet.Kernel.DB.HdWallet.Read (
   , readHdAddress
   ) where
 
-import           Universum
+{-# ANN module ("HLint: ignore Unnecessary hiding" :: Text) #-}
+-- The hide is strictly not necessary, but good for human readers: it's not
+-- the same as the familiar Data.Foldable.toList
+import           Universum hiding (toList)
 
 import           Control.Lens (at)
+import           Data.Foldable
 
 import           Pos.Core (Coin, sumCoins)
 
@@ -73,7 +77,7 @@ check f g = using' f (const g)
 hdRootBalance :: HdRootId -> HdQuery Integer
 hdRootBalance rootId = sumCoins
                      . map hdAccountBalance
-                     . toList
+                     . Data.Foldable.toList
                      . IxSet.getEQ rootId
                      . view hdWalletsAccounts
 
